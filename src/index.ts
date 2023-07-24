@@ -1,6 +1,6 @@
 interface Env {
 	CORS_ALLOW_ORIGIN: string;
-	HELIUS_API_KEY: string;
+	DEEZ_API_KEY: string;
 }
 
 export default {
@@ -37,13 +37,13 @@ export default {
 		const upgradeHeader = request.headers.get('Upgrade')
 
 		if (upgradeHeader || upgradeHeader === 'websocket') {
-			return await fetch(`https://mainnet.helius-rpc.com/?api-key=${env.HELIUS_API_KEY}`, request)
+			return await fetch(`https://bread.deeznode.io/?token=${env.DEEZ_API_KEY}`, request)
 		}
 
 
 		const { pathname, search } = new URL(request.url)
 		const payload = await request.text();
-		const proxyRequest = new Request(`https://${pathname === '/' ? 'mainnet.helius-rpc.com' : 'api.helius.xyz'}${pathname}?api-key=${env.HELIUS_API_KEY}${search ? `&${search.slice(1)}` : ''}`, {
+		const proxyRequest = new Request(`https://bread.deeznode.io/?token=${env.DEEZ_API_KEY}`, {
 			method: request.method,
 			body: payload || null,
 			headers: {
